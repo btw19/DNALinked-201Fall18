@@ -67,4 +67,10 @@ public class LinkStrand implements IDnaStrand{
 		return 0;
 	}
 
+	public String toString() {
+		while (myInfo != null) {
+		
+		}
+		return null;
+	}
 }
