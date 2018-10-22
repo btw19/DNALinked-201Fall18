@@ -23,8 +23,7 @@ public class StringStrand implements IDnaStrand {
 	 * Create a strand representing s. No error checking is done to see if s
 	 * represents valid genomic/DNA data.
 	 * 
-	 * @param s
-	 *            is the source of cgat data for this strand
+	 * @param s is the source of cgat data for this strand
 	 */
 	public StringStrand(String s) {
 		initialize(s);
@@ -34,8 +33,7 @@ public class StringStrand implements IDnaStrand {
 	 * Initialize this strand so that it represents the value of source. No
 	 * error checking is performed.
 	 * 
-	 * @param source
-	 *            is the source of this enzyme
+	 * @param source is the source of this enzyme
 	 */
 	@Override 
 	public void initialize(String source) {
@@ -62,8 +60,7 @@ public class StringStrand implements IDnaStrand {
 	 * done. This method isn't efficient; it doesn't use a StringBuilder or a
 	 * StringBuffer.
 	 * 
-	 * @param dna
-	 *            is the String appended to this strand
+	 * @param dna is the String appended to this strand
 	 */
 	@Override 
 	public IDnaStrand append(String dna) {

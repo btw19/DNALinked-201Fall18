@@ -1,9 +1,22 @@
 //Comment
 //test
 public class LinkStrand implements IDnaStrand{
+	
+	private class Node {
+		String info;
+		Node next;
+		
+		public Node(String s) {
+			info = s;
+			next = null;
+		}
+	}
+		   
+	private Node myFirst,myLast;
+	private long mySize;
+	private int myAppends;
 
 	private LinkStrand myInfo;
-	private int myAppends;
 	
 	public LinkStrand() {
 		this("");
