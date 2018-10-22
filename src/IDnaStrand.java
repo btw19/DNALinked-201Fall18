@@ -16,10 +16,8 @@ public interface IDnaStrand extends Iterable<Character>{
 	 * Cut this strand at every occurrence of enzyme, essentially replacing
 	 * every occurrence of enzyme with splicee.
 	 * 
-	 * @param enzyme
-	 *            is the pattern/strand searched for and replaced
-	 * @param splicee
-	 *            is the pattern/strand replacing each occurrence of enzyme
+	 * @param enzyme is the pattern/strand searched for and replaced
+	 * @param splicee is the pattern/strand replacing each occurrence of enzyme
 	 * @return the new strand leaving the original strand unchanged.
 	 */
 	default IDnaStrand cutAndSplice(String enzyme, String splicee) {
