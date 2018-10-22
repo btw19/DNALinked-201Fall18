@@ -45,8 +45,11 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public IDnaStrand append(String dna) {
-		// TODO Auto-generated method stub
-		return null;
+		Node newLast = new Node(dna);
+		myLast = newLast;
+		mySize += dna.length();
+		myAppends++;
+		return this;
 	}
 
 	@Override
@@ -57,8 +60,7 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public int getAppendCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return myAppends;
 	}
 
 	@Override
@@ -68,9 +70,12 @@ public class LinkStrand implements IDnaStrand{
 	}
 
 	public String toString() {
-		while (myInfo != null) {
-		
+		Node temp = myFirst;
+		StringBuilder ret = new StringBuilder();
+		while (temp.next != null) {
+			ret.append(temp.info);
+			temp = temp.next;
 		}
-		return null;
+		return ret.toString();
 	}
 }
