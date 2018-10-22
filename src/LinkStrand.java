@@ -2,6 +2,9 @@
 //test
 public class LinkStrand implements IDnaStrand{
 
+	private LinkStrand myInfo;
+	private int myAppends;
+	
 	public LinkStrand() {
 		this("");
 	}
@@ -18,14 +21,13 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public void initialize(String source) {
-		// TODO Auto-generated method stub
-		
+		myInfo = new LinkStrand(source);
+		myAppends = 0;
 	}
 
 	@Override
 	public IDnaStrand getInstance(String source) {
-		// TODO Auto-generated method stub
-		return null;
+		return new LinkStrand(source);
 	}
 
 	@Override
