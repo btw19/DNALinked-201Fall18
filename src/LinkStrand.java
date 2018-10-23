@@ -1,5 +1,13 @@
-//Comment
-//test
+import java.util.*;
+
+/**
+ * LinkStrand class for the DNALinked project. This class uses a linked list
+ * and nodes to represent the DNA rather than a string or string builder, 
+ * making it more efficient. It also implements the IDnaStrand interface.
+ * @author Virginia Capehart and Ben Williams
+ * @date due 10/25/18
+ */
+
 public class LinkStrand implements IDnaStrand{
 	
 	private class Node {
@@ -16,7 +24,7 @@ public class LinkStrand implements IDnaStrand{
 	private long mySize;
 	private int myAppends;
 
-	private Node myInfo;
+	private LinkedList<Node> myInfo;
 	
 	public LinkStrand() {
 		this("");
@@ -28,14 +36,18 @@ public class LinkStrand implements IDnaStrand{
 	
 	@Override
 	public long size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return mySize;
 	}
 
 	@Override
 	public void initialize(String source) {
-		myInfo = new Node(source);
+		myInfo = new LinkedList<Node>();
+		myFirst = new Node(source);
+		myFirst.next = myLast;
+		myInfo.add(myFirst);
+		myInfo.add(myLast);
 		myAppends = 0;
+		mySize = source.length();
 	}
 
 	@Override
@@ -45,9 +57,11 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public IDnaStrand append(String dna) {
-		//myFirst = myInfo;
-		myInfo = new Node(dna);
-		//myLast = myInfo;
+		Node dnaNode = new Node(dna);
+		
+		myInfo.add(dnaNode);
+		myLast = dnaNode;
+		
 		mySize += dna.length();
 		myAppends++;
 		return this;
@@ -55,8 +69,7 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public IDnaStrand reverse() {
-		// TODO Auto-generated method stub
-		return null;
+		return this;
 	}
 
 	@Override
@@ -66,14 +79,13 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public char charAt(int index) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	public String toString() {
-		Node temp = myFirst;
 		StringBuilder ret = new StringBuilder();
-		while (temp != null && temp.next != null) {
+		Node temp = myFirst;
+		while (temp.next != null) {
 			ret.append(temp.info);
 			temp = temp.next;
 		}
