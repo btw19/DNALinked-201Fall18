@@ -1,4 +1,3 @@
-import java.util.*;
 
 /**
  * LinkStrand class for the DNALinked project. This class uses a linked list
@@ -23,8 +22,6 @@ public class LinkStrand implements IDnaStrand{
 	private Node myFirst,myLast;
 	private long mySize;
 	private int myAppends;
-
-	private LinkedList<Node> myInfo;
 	
 	public LinkStrand() {
 		this("");
@@ -41,11 +38,8 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public void initialize(String source) {
-		myInfo = new LinkedList<Node>();
 		myFirst = new Node(source);
 		myFirst.next = myLast;
-		myInfo.add(myFirst);
-		myInfo.add(myLast);
 		myAppends = 0;
 		mySize = source.length();
 	}
@@ -57,9 +51,10 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public IDnaStrand append(String dna) {
-		Node dnaNode = new Node(dna);
-		myInfo.add(dnaNode);
-		myLast = dnaNode;
+		StringBuilder newFirst = new StringBuilder(myFirst.info);
+		newFirst.append(myLast.info);
+		this.myFirst.info = newFirst.toString();
+		myLast = new Node(dna);
 		mySize += dna.length();
 		myAppends++;
 		return this;
@@ -82,8 +77,8 @@ public class LinkStrand implements IDnaStrand{
 
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
-		Node temp = myInfo.get(0);
-		while (temp.next != null) {
+		Node temp = myFirst;
+		while (temp != null) {
 			ret.append(temp.info);
 			temp = temp.next;
 		}
