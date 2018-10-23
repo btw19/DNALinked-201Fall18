@@ -58,10 +58,8 @@ public class LinkStrand implements IDnaStrand{
 	@Override
 	public IDnaStrand append(String dna) {
 		Node dnaNode = new Node(dna);
-		
 		myInfo.add(dnaNode);
 		myLast = dnaNode;
-		
 		mySize += dna.length();
 		myAppends++;
 		return this;
@@ -84,7 +82,7 @@ public class LinkStrand implements IDnaStrand{
 
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
-		Node temp = myFirst;
+		Node temp = myInfo.get(0);
 		while (temp.next != null) {
 			ret.append(temp.info);
 			temp = temp.next;
