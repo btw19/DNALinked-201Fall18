@@ -9,10 +9,19 @@
 
 public class LinkStrand implements IDnaStrand{
 	
+	/**
+	 * Node class, used for implementation of the internal linked list.
+	 * @author Virginia Capehart and Ben Williams
+	 */
 	private class Node {
 		String info;
 		Node next;
 		
+		/**
+		 * Basic parameterized constructor for the Node class. Creates a Node
+		 * object with the given String.
+		 * @param s
+		 */
 		public Node(String s) {
 			info = s;
 			next = null;
@@ -23,10 +32,17 @@ public class LinkStrand implements IDnaStrand{
 	private long mySize;
 	private int myAppends;
 	
+	/**
+	 * Default constructor. Creates a new object with an empty String value
+	 */
 	public LinkStrand() {
 		this("");
 	}
 	
+	/**
+	 * Parameterized constructor. Creates a new object using the parameter s
+	 * @param s, the String to be the info for the LinkStrand
+	 */
 	public LinkStrand(String s) {
 		initialize(s);
 	}
@@ -51,18 +67,28 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public IDnaStrand append(String dna) {
-		StringBuilder newFirst = new StringBuilder(myFirst.info);
-		newFirst.append(myLast.info);
-		this.myFirst.info = newFirst.toString();
-		myLast = new Node(dna);
+		Node dnaNode = new Node(dna);
+		myLast = dnaNode;
+		myFirst.next = myLast;
+		
 		mySize += dna.length();
 		myAppends++;
 		return this;
 	}
 
-	@Override
+	@Override //creates a new object, NOT a mutator
 	public IDnaStrand reverse() {
-		return this;
+		LinkStrand reversed;
+		Node temp = this.myFirst;
+		StringBuilder backwards = new StringBuilder();
+		while(temp != null) {
+			StringBuilder tempSB = new StringBuilder(temp.info);
+			tempSB.reverse();
+			backwards.append(tempSB);
+			temp = temp.next;
+		}
+		reversed = new LinkStrand(backwards.toString());
+		return reversed;
 	}
 
 	@Override
@@ -75,6 +101,11 @@ public class LinkStrand implements IDnaStrand{
 		return 0;
 	}
 
+	/**
+	 * Implementation of the toString method that uses a StringBuilder to 
+	 * concatenate the contents of each node and returns that value as a String
+	 */
+	@Override
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 		Node temp = myFirst;
