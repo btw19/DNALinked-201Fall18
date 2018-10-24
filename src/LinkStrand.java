@@ -86,17 +86,17 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public IDnaStrand reverse() {
-		LinkStrand reversed;
+		LinkStrand reversedList = new LinkStrand();
 		Node temp = this.myFirst;
 		StringBuilder backwards = new StringBuilder();
 		while(temp != null) {
 			StringBuilder tempSB = new StringBuilder(temp.info);
 			tempSB.reverse();
 			backwards.append(tempSB);
+			reversedList.append(backwards.toString());
 			temp = temp.next;
 		}
-		reversed = new LinkStrand(backwards.toString());
-		return reversed;
+		return reversedList;
 	}
 
 	@Override
@@ -106,7 +106,7 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public char charAt(int index) {
-		if(index < 0 || index >= this.size()) {
+		if(index < 0 || index >= mySize) {
 			throw new IndexOutOfBoundsException();
 		}
 		myCurrent = myFirst;
@@ -133,7 +133,6 @@ public class LinkStrand implements IDnaStrand{
 				}
 			}
 		}
-		myIndex = index;
 		return myCurrent.info.charAt(myLocalIndex);
 	}
 
