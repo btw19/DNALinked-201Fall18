@@ -84,7 +84,7 @@ public class LinkStrand implements IDnaStrand{
 		return this;
 	}
 
-	@Override //creates a new object, NOT a mutator
+	@Override
 	public IDnaStrand reverse() {
 		LinkStrand reversed;
 		Node temp = this.myFirst;
@@ -106,24 +106,34 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public char charAt(int index) {
-		if(index >= this.size() || index < 0) {
+		if(index < 0 || index >= this.size()) {
 			throw new IndexOutOfBoundsException();
 		}
-
-		while (myIndex != index) {
-			myIndex++;
-			myLocalIndex++;
-			if (myLocalIndex >= myCurrent.info.length()) {
-				myLocalIndex = 0;
-				myCurrent = myCurrent.next;
-			}
-			if (myIndex >= mySize) {
-				myIndex = 0;
-				myLocalIndex = 0;
-				myCurrent = myFirst;
+		myCurrent = myFirst;
+		if(myIndex < index) {
+			while(myIndex != index) {
+				myIndex++;
+				myLocalIndex++;
+				if (myLocalIndex >= myCurrent.info.length()) {
+					myLocalIndex = 0;
+					myCurrent = myCurrent.next;
+				}
 			}
 		}
-		
+		else {
+			myIndex = 0;
+			myLocalIndex = 0;
+			myCurrent = myFirst;
+			while(myIndex != index) {
+				myIndex++;
+				myLocalIndex++;
+				if (myLocalIndex >= myCurrent.info.length()) {
+					myLocalIndex = 0;
+					myCurrent = myCurrent.next;
+				}
+			}
+		}
+		myIndex = index;
 		return myCurrent.info.charAt(myLocalIndex);
 	}
 
