@@ -84,17 +84,22 @@ public class LinkStrand implements IDnaStrand{
 		return this;
 	}
 
-	@Override
+	@Override //creates a new object, NOT a mutator
 	public IDnaStrand reverse() {
-		LinkStrand reversedList = new LinkStrand();
+		LinkStrand reversed;
 		Node temp = this.myFirst;
 		while(temp != null) {
 			StringBuilder tempSB = new StringBuilder(temp.info);
 			tempSB.reverse();
+<<<<<<< HEAD
 			reversedList.append(tempSB.toString());
+=======
+			backwards.append(tempSB);
+>>>>>>> 2023e31beede0fd04a0fd68fdbc11044ad642455
 			temp = temp.next;
 		}
-		return reversedList;
+		reversed = new LinkStrand(backwards.toString());
+		return reversed;
 	}
 
 	@Override
@@ -104,9 +109,10 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public char charAt(int index) {
-		if(index < 0 || index >= mySize) {
+		if(index >= mySize) {
 			throw new IndexOutOfBoundsException();
 		}
+<<<<<<< HEAD
 		while(myIndex != index) {
 			myIndex++;
 			myLocalIndex++;
@@ -119,8 +125,23 @@ public class LinkStrand implements IDnaStrand{
 			if (myLocalIndex >= myCurrent.info.length()) {
 				myLocalIndex = 0;
 				myCurrent = myCurrent.next;
+=======
+
+		while (myIndex != index) {
+			myIndex++;
+			myLocalIndex += 1;
+			if (myLocalIndex >= myCurrent.info.length()) {
+				myLocalIndex = 0;
+				myCurrent = myCurrent.next;
+			}
+			if (myIndex >= mySize) {
+				myIndex = 0;
+				myLocalIndex = 0;
+				myCurrent = myFirst;
+>>>>>>> 2023e31beede0fd04a0fd68fdbc11044ad642455
 			}
 		}
+		
 		return myCurrent.info.charAt(myLocalIndex);
 	}
 		
