@@ -32,6 +32,11 @@ public class LinkStrand implements IDnaStrand{
 	private long mySize;
 	private int myAppends;
 	
+	private Node myCurrent;
+	private int myIndex;
+	private int myLocalIndex; 
+	
+	
 	/**
 	 * Default constructor. Creates a new object with an empty String value
 	 */
@@ -58,6 +63,9 @@ public class LinkStrand implements IDnaStrand{
 		myFirst.next = myLast;
 		myAppends = 0;
 		mySize = source.length();
+		myCurrent = new Node("");
+		myIndex = 0;
+		myLocalIndex = 0;
 	}
 
 	@Override
@@ -98,7 +106,29 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public char charAt(int index) {
-		return 0;
+		if(index >= this.size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		
+		if(!(index > myIndex)) {
+			Node list = myFirst;
+		
+			while(myLocalIndex < index) {
+				this.myLocalIndex++;
+				if(myLocalIndex >= list.info.length()) {
+					list = list.next;
+				}
+			}
+		
+			myCurrent = list;
+			this.myIndex = index;
+		}
+		
+		else {
+			
+		}
+		
+		return myCurrent.info.charAt(index);
 	}
 
 	/**
