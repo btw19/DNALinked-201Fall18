@@ -18,6 +18,8 @@ public class CodonProfiler {
 		
 		for(int k=0; k < codons.length; k++) {
 			map.put(codons[k], 0);
+		}
+		
 			Iterator<Character> iter = strand.iterator();
 			while (iter.hasNext()) {
 				char a = iter.next();
@@ -30,11 +32,16 @@ public class CodonProfiler {
 					c = iter.next();
 				}
 				String cod = ""+a+b+c;
-				if (cod.equals(codons[k])) {
-					ret[k]++;
+				if (map.containsKey(cod)) {
+					map.put(cod, map.get(cod)+1);
 				}
 			}
-		}	
+			for (int k=0; k < codons.length; k++) {
+				if (map.keySet().contains(codons[k])) {
+					ret[k] = map.get(codons[k]).intValue();
+				}
+			}
+			
 		return ret;
 	}
 }
