@@ -60,7 +60,7 @@ public class LinkStrand implements IDnaStrand{
 	@Override
 	public void initialize(String source) {
 		myFirst = new Node(source);
-		myFirst.next = myLast;
+		myLast = myFirst;
 		myAppends = 0;
 		mySize = source.length();
 		myCurrent = new Node("");
@@ -76,8 +76,8 @@ public class LinkStrand implements IDnaStrand{
 	@Override
 	public IDnaStrand append(String dna) {
 		Node dnaNode = new Node(dna);
-		myLast = dnaNode;
-		myFirst.next = myLast;
+		myLast.next = dnaNode;
+		myLast = myLast.next;
 		
 		mySize += dna.length();
 		myAppends++;
@@ -106,29 +106,25 @@ public class LinkStrand implements IDnaStrand{
 
 	@Override
 	public char charAt(int index) {
-		if(index >= this.size()) {
+		if(index >= mySize) {
 			throw new IndexOutOfBoundsException();
 		}
-		
-		if(!(index > myIndex)) {
-			Node list = myFirst;
-		
-			while(myLocalIndex < index) {
-				this.myLocalIndex++;
-				if(myLocalIndex >= list.info.length()) {
-					list = list.next;
-				}
+
+		while (myIndex != index) {
+			myIndex++;
+			myLocalIndex++;
+			if (myLocalIndex >= myCurrent.info.length()) {
+				myLocalIndex = 0;
+				myCurrent = myCurrent.next;
 			}
-		
-			myCurrent = list;
-			this.myIndex = index;
+			if (myIndex >= mySize) {
+				myIndex = 0;
+				myLocalIndex = 0;
+				myCurrent = myFirst;
+			}
 		}
 		
-		else {
-			
-		}
-		
-		return myCurrent.info.charAt(index);
+		return myCurrent.info.charAt(myLocalIndex);
 	}
 
 	/**
