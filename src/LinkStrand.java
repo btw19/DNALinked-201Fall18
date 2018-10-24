@@ -99,8 +99,8 @@ public class LinkStrand implements IDnaStrand{
 				previous = reversedList.myFirst;
 				reversedList.myFirst = new Node(tempSB.toString());
 				reversedList.myFirst.next = previous;
-				temp = temp.next;
 			}
+			temp = temp.next;
 		}
 		return reversedList;
 	}
