@@ -63,7 +63,7 @@ public class LinkStrand implements IDnaStrand{
 		myLast = myFirst;
 		myAppends = 0;
 		mySize = source.length();
-		myCurrent = new Node("");
+		myCurrent = myFirst;
 		myIndex = 0;
 		myLocalIndex = 0;
 	}
@@ -88,12 +88,10 @@ public class LinkStrand implements IDnaStrand{
 	public IDnaStrand reverse() {
 		LinkStrand reversedList = new LinkStrand();
 		Node temp = this.myFirst;
-		StringBuilder backwards = new StringBuilder();
 		while(temp != null) {
 			StringBuilder tempSB = new StringBuilder(temp.info);
 			tempSB.reverse();
-			backwards.append(tempSB);
-			reversedList.append(backwards.toString());
+			reversedList.append(tempSB.toString());
 			temp = temp.next;
 		}
 		return reversedList;
@@ -109,32 +107,23 @@ public class LinkStrand implements IDnaStrand{
 		if(index < 0 || index >= mySize) {
 			throw new IndexOutOfBoundsException();
 		}
-		myCurrent = myFirst;
-		if(myIndex < index) {
-			while(myIndex != index) {
-				myIndex++;
-				myLocalIndex++;
-				if (myLocalIndex >= myCurrent.info.length()) {
-					myLocalIndex = 0;
-					myCurrent = myCurrent.next;
-				}
+		while(myIndex != index) {
+			myIndex++;
+			myLocalIndex++;
+			if(myCurrent == null) {
+				myCurrent = myFirst;
+				myIndex = 0;
+				myLocalIndex = 0;
 			}
-		}
-		else {
-			myIndex = 0;
-			myLocalIndex = 0;
-			myCurrent = myFirst;
-			while(myIndex != index) {
-				myIndex++;
-				myLocalIndex++;
-				if (myLocalIndex >= myCurrent.info.length()) {
-					myLocalIndex = 0;
-					myCurrent = myCurrent.next;
-				}
+
+			if (myLocalIndex >= myCurrent.info.length()) {
+				myLocalIndex = 0;
+				myCurrent = myCurrent.next;
 			}
 		}
 		return myCurrent.info.charAt(myLocalIndex);
 	}
+		
 
 	/**
 	 * Implementation of the toString method that uses a StringBuilder to 

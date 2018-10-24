@@ -15,7 +15,7 @@ public class CodonProfiler {
 	public int[] getCodonProfile(IDnaStrand strand, String[] codons) {
 		HashMap<String,Integer> map = new HashMap<>();
 		int[] ret = new int[codons.length];
-				
+		
 		for(int k=0; k < codons.length; k++) {
 			map.put(codons[k], 0);
 			Iterator<Character> iter = strand.iterator();
