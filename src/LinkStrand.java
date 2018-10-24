@@ -88,10 +88,13 @@ public class LinkStrand implements IDnaStrand{
 	public IDnaStrand reverse() {
 		LinkStrand reversedList = new LinkStrand();
 		Node temp = this.myFirst;
+		Node previous = null;
 		while(temp != null) {
 			StringBuilder tempSB = new StringBuilder(temp.info);
 			tempSB.reverse();
-			reversedList.append(tempSB.toString());
+			previous = reversedList.myFirst;
+			reversedList.myFirst = new Node(tempSB.toString());
+			reversedList.myFirst.next = previous;
 			temp = temp.next;
 		}
 		return reversedList;
