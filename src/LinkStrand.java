@@ -104,6 +104,7 @@ public class LinkStrand implements IDnaStrand{
 		Node nextList = List2;
 		while (List2 != null) {
 			reversedList.myLast = nextList.next;
+			List2 = List2.next;
 		}
 		return reversedList;
 	}
