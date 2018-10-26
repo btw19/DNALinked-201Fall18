@@ -9,12 +9,34 @@ explanation below that the time to execute cutAndSplice is O(b^2S)?
 Note that the value of b is half the number of calls to append since each cut 
 (except the first) is modeled by two calls of append in the method cutAndSplice 
 -- see the code. This means that b^2 will be constant in the benchmark, but S 
-will vary. 
+will vary.
+
+	Results from running Benchmark with StringStrand:
+	
+	dna length = 4,639,221
+	cutting at enzyme gaattc
+	-----
+	Class	                splicee	      recomb	time	appends
+	-----
+	StringStrand:	            256	      4,800,471	0.464	1290
+	StringStrand:	            512	      4,965,591	0.419	1290
+	StringStrand:	          1,024	      5,295,831	0.430	1290
+	StringStrand:	          2,048	      5,956,311	0.487	1290
+	StringStrand:	          4,096	      7,277,271	0.634	1290
+	StringStrand:	          8,192	      9,919,191	0.846	1290
+	StringStrand:	         16,384	     15,203,031	1.313	1290
+	StringStrand:	         32,768	     25,770,711	2.335	1290
+	StringStrand:	         65,536	     46,906,071	5.078	1290
+	StringStrand:	        131,072	     89,176,791	12.403	1290
+	StringStrand:	        262,144	    173,718,231	22.561	1290
+	StringStrand:	        524,288	    342,801,111	42.182	1290
+	StringStrand:	      1,048,576	    680,966,871	83.545	1290
+	
 
 	The time is O(b^2s) because for every concatenation of a string s, a new 
 	string variable must be created. There will be b concatenations, and the last
-	one happens b times, making the timing O(b^2s). These times are consistent with
-	this analysis because 
+	one happens S times, making the timing O(b^2s). The formula for this is 
+	(1 + 2 + 3 ... + b) * S, which comes out to be b^2 * S. 
 
 Question 2: are the benchmark timings for StringBuilderStrand consistent with the 
 explanation below that the time to execute cutAndSplice is O(bS)? 
@@ -24,13 +46,76 @@ Note that the value of b is half the number of calls to append since each cut
 -- see the code. This means that b will be constant in the benchmark, but S 
 will vary. 
 
+	Results from running Benchmark with StringBuilderStrand:
+	
+	dna length = 4,639,221
+	cutting at enzyme gaattc
+	-----
+	Class	                        splicee	     recomb	    time	appends
+	-----
+	StringBuilderStrand:	            256	      4,800,471	0.025	1290
+	StringBuilderStrand:	            512	      4,965,591	0.019	1290
+	StringBuilderStrand:	          1,024	      5,295,831	0.007	1290
+	StringBuilderStrand:	          2,048	      5,956,311	0.009	1290
+	StringBuilderStrand:	          4,096	      7,277,271	0.007	1290
+	StringBuilderStrand:	          8,192	      9,919,191	0.007	1290
+	StringBuilderStrand:	         16,384	     15,203,031	0.015	1290
+	StringBuilderStrand:	         32,768	     25,770,711	0.018	1290
+	StringBuilderStrand:	         65,536	     46,906,071	0.038	1290
+	StringBuilderStrand:	        131,072	     89,176,791	0.072	1290
+	StringBuilderStrand:	        262,144	    173,718,231	0.193	1290
+	StringBuilderStrand:	        524,288	    342,801,111	0.512	1290
+		
+	
 	The time is O(bs) because a string s is appended to the StringBuilder a total
-	of s times. These times are consistent with this analysis because 
+	of b times. With a StringBuilder, the program does not have to create a new 
+	object each time something is appended. For this reason, the StringBuilder is
+	more efficient than the String, which performs this task in O(b^2S) time. 
 
 Question 3: Explain why the time for LinkStrand does not change much at all over 
 all the runs in the benchmark program. Explain why you think memory is exhausted 
 at the specific strand size you see in your timings -- as compared to exhaustion 
 for String and StringBuilder.
 
-	answer
-
+	Results from running Benchmark with LinkStrand:
+	
+	dna length = 4,639,221
+	cutting at enzyme gaattc
+	-----
+	Class	            splicee	      recomb	time	appends
+	-----
+	LinkStrand:	            256	      4,800,471	0.024	1290
+	LinkStrand:	            512	      4,965,591	0.018	1290
+	LinkStrand:	          1,024	      5,295,831	0.003	1290
+	LinkStrand:	          2,048	      5,956,311	0.005	1290
+	LinkStrand:	          4,096	      7,277,271	0.004	1290
+	LinkStrand:	          8,192	      9,919,191	0.004	1290
+	LinkStrand:	         16,384	     15,203,031	0.003	1290
+	LinkStrand:	         32,768	     25,770,711	0.006	1290
+	LinkStrand:	         65,536	     46,906,071	0.004	1290
+	LinkStrand:	        131,072	     89,176,791	0.005	1290
+	LinkStrand:	        262,144	    173,718,231	0.003	1290
+	LinkStrand:	        524,288	    342,801,111	0.005	1290
+	LinkStrand:	      1,048,576	    680,966,871	0.004	1290
+	LinkStrand:	      2,097,152	  1,357,298,391	0.004	1290
+	LinkStrand:	      4,194,304	  2,709,961,431	0.005	1290
+	LinkStrand:	      8,388,608	  5,415,287,511	0.006	1290
+	LinkStrand:	     16,777,216	 10,825,939,671	0.005	1290
+	LinkStrand:	     33,554,432	 21,647,243,991	0.007	1290
+	LinkStrand:	     67,108,864	 43,289,852,631	0.005	1290
+	LinkStrand:	    134,217,728	 86,575,069,911	0.006	1290
+	LinkStrand:	    268,435,456	173,145,504,471	0.007	1290
+	LinkStrand:	    536,870,912	346,286,373,591	0.006	1290
+	
+	
+	The time and memory are both more efficient in LinkStrand because it uses an
+	internal linked list to keep track of the information. With linked lists, 
+	new nodes are not created every single time a String needs to be replaced
+	because pointers are used. This improves memory such that its peformance is
+	the size of the String which it is "inserting." For the same reason, using a 
+	linked list is more efficient in terms of time. Because a linked list does not
+	use as much memory as String and StringBuiler, this program runs out of 
+	memory after a much longer amount of time. This efficiency is due to the
+	linked list's use of pointers. Because of pointers, the time needed to insert 
+	something new does not depend on the size of the String to be inserted. This 
+	is why the time does not change much for the different runs. 
